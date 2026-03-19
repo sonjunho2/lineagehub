@@ -1,0 +1,2 @@
+slug,name,class_name,grade,mp_cost,cooldown_note,source,description,effects_json
+sample-spell,샘플 마법,마법사,희귀,12,짧음,합법적 수기 입력,설명 입력,"{""heal"":""중""}"

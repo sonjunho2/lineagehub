@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-head"><h1>몬스터 DB</h1><form><input name="q" value="{{ q }}" placeholder="몬스터/지역 검색" /><button>검색</button></form></div>
+{% for row in rows %}
+<article class="card mb12">
+  <h2>{{ row.name }} <small>Lv.{{ row.level }}</small></h2>
+  <p>{{ row.description }}</p>
+  <div class="tag-row"><span>{{ row.zone }}</span><span>약점: {{ row.weak_attr }}</span><span>리젠: {{ row.respawn_note }}</span><span>드랍: {{ ', '.join(json.loads(row.drops_json or '[]')) }}</span></div>
+</article>
+{% endfor %}
+{% endblock %}

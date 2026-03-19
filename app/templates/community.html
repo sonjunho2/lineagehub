@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-head">
+  <h1>커뮤니티</h1>
+  <div class="tab-row">
+    <a href="/community?board=notice">공지</a>
+    <a href="/community?board=tip">팁</a>
+    <a href="/community?board=market">시세토론</a>
+    <a href="/community?board=clan">혈맹모집</a>
+    <a href="/community?board=qna">질문답변</a>
+  </div>
+</div>
+<div class="grid-2-main">
+  <section>
+    {% if user %}
+    <form method="post" action="/community/post" class="card mb12">
+      <input type="hidden" name="board" value="{{ board }}" />
+      <input name="title" placeholder="제목" />
+      <textarea name="body" rows="5" placeholder="내용"></textarea>
+      <button>글쓰기</button>
+    </form>
+    {% endif %}
+    <div class="card">
+      <table class="table compact">
+        <tr><th>ID</th><th>제목</th><th>작성자</th><th>조회</th><th>작성일</th></tr>
+        {% for row in posts %}
+        <tr><td>{{ row.id }}</td><td><a href="/community/post/{{ row.id }}">{{ row.title }}</a></td><td>{{ row.username }}</td><td>{{ row.views }}</td><td>{{ row.created_at }}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </section>
+  <aside class="card ad-box">{{ slots.community_inline.code_html if slots.community_inline and slots.community_inline.is_enabled else '커뮤니티 광고 슬롯' }}</aside>
+</div>
+{% endblock %}

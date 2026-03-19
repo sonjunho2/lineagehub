@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>시세</h1>
+<div class="grid-2">
+  <div class="card">
+    <form>
+      <select name="server" onchange="this.form.submit()">
+        {% for row in rows %}<option value="{{ row.server_name }}" {% if row.server_name == server %}selected{% endif %}>{{ row.server_name }}</option>{% endfor %}
+      </select>
+    </form>
+    <canvas id="priceChart" height="120"></canvas>
+  </div>
+  <div class="card">
+    <table class="table compact">
+      <tr><th>서버</th><th>현재가</th><th>거래량</th><th>등락률</th></tr>
+      {% for row in rows %}<tr><td>{{ row.server_name }}</td><td>{{ row.price }}</td><td>{{ row.volume }}</td><td>{{ row.change_pct }}%</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+<script>
+const labels = {{ chart_rows | map(attribute='captured_at') | list | tojson }};
+const data = {{ chart_rows | map(attribute='price') | list | tojson }};
+new Chart(document.getElementById('priceChart'), {
+  type: 'line',
+  data: { labels, datasets: [{ label: '{{ server }}', data }] },
+  options: { responsive: true, maintainAspectRatio: false }
+});
+</script>
+{% endblock %}

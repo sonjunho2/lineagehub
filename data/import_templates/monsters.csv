@@ -1,0 +1,2 @@
+slug,name,level,zone,description,drops_json,weak_attr,respawn_note
+sample-monster,샘플 몬스터,30,샘플 지역,설명 입력,"[""샘플 검"",""아데나"""]",화염,고정 리젠

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>러쉬 시뮬레이터</h1>
+<div class="grid-2">
+  <div class="card">
+    <form method="post" action="/simulator/run">
+      <label>아이템</label>
+      <select name="item_name">{% for row in items %}<option value="{{ row.name }}">{{ row.name }}</option>{% endfor %}</select>
+      <label>목표 강화</label>
+      <input type="number" name="target_level" value="7" min="1" max="10" />
+      <label>주문서 타입</label>
+      <select name="scroll_type">
+        <option value="normal">일반</option>
+        <option value="blessed">축복</option>
+        <option value="cursed">저주</option>
+      </select>
+      <label>주문서 단가</label>
+      <input type="number" name="unit_cost" value="50000" />
+      <p class="muted">1회 실행 포인트 차감: {{ settings.point_cost_simulation }}</p>
+      <button>시뮬레이션 실행</button>
+    </form>
+  </div>
+  <div class="card ad-box">{{ slots.simulator_result.code_html if slots.simulator_result and slots.simulator_result.is_enabled else '시뮬 결과 광고 슬롯' }}</div>
+</div>
+<div class="card mt16">
+  <h2>최근 실행 기록</h2>
+  <table class="table compact">
+    <tr><th>유저</th><th>아이템</th><th>목표</th><th>시도</th><th>성공</th><th>유지실패</th><th>파괴</th><th>최고강화</th><th>예상비용</th></tr>
+    {% for row in runs %}
+    <tr><td>{{ row.username or 'guest' }}</td><td>{{ row.item_name }}</td><td>+{{ row.target_level }}</td><td>{{ row.attempts }}</td><td>{{ row.success_count }}</td><td>{{ row.failed_keep }}</td><td>{{ row.destroyed_count }}</td><td>+{{ row.best_level }}</td><td>{{ row.estimated_cost }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

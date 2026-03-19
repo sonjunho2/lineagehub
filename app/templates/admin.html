@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>관리자 대시보드</h1>
+<div class="grid-5">
+  <div class="card"><strong>회원</strong><div class="big">{{ stats.users }}</div></div>
+  <div class="card"><strong>게시글</strong><div class="big">{{ stats.posts }}</div></div>
+  <div class="card"><strong>시뮬 기록</strong><div class="big">{{ stats.runs }}</div></div>
+  <div class="card"><strong>아이템</strong><div class="big">{{ stats.items }}</div></div>
+  <div class="card"><strong>오픈 신고</strong><div class="big">{{ stats.reports }}</div></div>
+</div>
+
+<div class="grid-2 mt16">
+  <div class="card">
+    <h2>광고 슬롯 관리</h2>
+    {% for row in slots %}
+    <form method="post" action="/admin/ad-slot" class="admin-form">
+      <input type="hidden" name="slot_id" value="{{ row.id }}" />
+      <strong>{{ row.slot_key }}</strong>
+      <label><input type="checkbox" name="is_enabled" {% if row.is_enabled %}checked{% endif %}/> 활성화</label>
+      <textarea name="code_html" rows="3">{{ row.code_html }}</textarea>
+      <input name="note" value="{{ row.note }}" />
+      <button>저장</button>
+    </form>
+    {% endfor %}
+  </div>
+  <div class="card">
+    <h2>회원 포인트 / 상태 관리</h2>
+    {% for row in users %}
+    <form method="post" action="/admin/user-points" class="admin-form inline-form">
+      <input type="hidden" name="user_id" value="{{ row.id }}" />
+      <span>{{ row.username }} ({{ row.role }})</span>
+      <input type="number" name="points" value="{{ row.points }}" />
+      <select name="status_value">
+        <option value="active" {% if row.status=='active' %}selected{% endif %}>active</option>
+        <option value="suspended" {% if row.status=='suspended' %}selected{% endif %}>suspended</option>
+        <option value="banned" {% if row.status=='banned' %}selected{% endif %}>banned</option>
+      </select>
+      <button>수정</button>
+    </form>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="grid-2 mt16">
+  <div class="card">
+    <h2>신고 처리</h2>
+    {% for row in reports %}
+    <form method="post" action="/admin/report-action" class="admin-form">
+      <input type="hidden" name="report_id" value="{{ row.id }}" />
+      <strong>#{{ row.id }} {{ row.target_type }} {{ row.target_id }}</strong>
+      <div class="muted">{{ row.reason }} / 신고자 {{ row.reporter_name or 'guest' }}</div>
+      <textarea rows="2" readonly>{{ row.detail or '' }}</textarea>
+      <select name="status_value">
+        <option value="open" {% if row.status=='open' %}selected{% endif %}>open</option>
+        <option value="reviewed" {% if row.status=='reviewed' %}selected{% endif %}>reviewed</option>
+        <option value="actioned" {% if row.status=='actioned' %}selected{% endif %}>actioned</option>
+        <option value="rejected" {% if row.status=='rejected' %}selected{% endif %}>rejected</option>
+      </select>
+      <input name="action_note" value="{{ row.action_note or '' }}" placeholder="처리 메모" />
+      <button>저장</button>
+    </form>
+    {% endfor %}
+  </div>
+  <div class="card">
+    <h2>제재 등록</h2>
+    <form method="post" action="/admin/sanction" class="admin-grid">
+      <input name="user_id" placeholder="user_id" />
+      <select name="sanction_type"><option value="warn">warn</option><option value="suspend">suspend</option><option value="ban">ban</option></select>
+      <input name="reason" placeholder="사유" />
+      <input name="duration_days" type="number" value="7" />
+      <button>등록</button>
+    </form>
+    <h3 class="mt16">최근 제재</h3>
+    <table class="table compact">
+      <tr><th>유저</th><th>유형</th><th>사유</th><th>만료</th></tr>
+      {% for row in sanctions %}<tr><td>{{ row.username }}</td><td>{{ row.sanction_type }}</td><td>{{ row.reason }}</td><td>{{ row.expires_at or '-' }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="grid-2 mt16">
+  <div class="card">
+    <h2>DB 직접 추가</h2>
+    <form method="post" action="/admin/item" class="admin-grid">
+      <input name="slug" placeholder="slug" />
+      <input name="name" placeholder="이름" />
+      <input name="grade" placeholder="등급" />
+      <input name="category" placeholder="카테고리" />
+      <input name="source" placeholder="출처" />
+      <input name="drop_monsters" placeholder="드랍 몬스터" />
+      <input name="tags" placeholder="태그" />
+      <textarea name="description" placeholder="설명"></textarea>
+      <textarea name="stats_json" placeholder='{"safeEnchant":6}'></textarea>
+      <button>아이템 추가</button>
+    </form>
+    <form method="post" action="/admin/spell" class="admin-grid mt16">
+      <input name="name" placeholder="마법 이름" />
+      <input name="class_name" placeholder="클래스" />
+      <input name="grade" placeholder="등급" />
+      <input name="mp_cost" type="number" value="0" />
+      <input name="cooldown_note" placeholder="쿨다운" />
+      <input name="source" placeholder="출처" />
+      <textarea name="description" placeholder="설명"></textarea>
+      <textarea name="effects_json" placeholder='{"heal":"중"}'></textarea>
+      <button>마법 추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>자료실 추가</h2>
+    <form method="post" action="/admin/skin" class="admin-grid">
+      <input name="title" placeholder="스킨명" />
+      <input name="category" placeholder="ui / map" />
+      <input name="preview_url" placeholder="미리보기 URL" />
+      <textarea name="description" placeholder="설명"></textarea>
+      <textarea name="colors_json" placeholder='{"primary":"#1fbf75"}'></textarea>
+      <button>스킨 추가</button>
+    </form>
+    <form method="post" action="/admin/blood-mark" class="admin-grid mt16">
+      <input name="title" placeholder="혈마크명" />
+      <input name="shape" placeholder="원형 / 방패형" />
+      <input name="preview_url" placeholder="미리보기 URL" />
+      <textarea name="description" placeholder="설명"></textarea>
+      <button>혈마크 추가</button>
+    </form>
+  </div>
+</div>
+
+<div class="grid-2 mt16">
+  <div class="card">
+    <h2>CSV 일괄 업로드</h2>
+    <form method="post" action="/admin/import/items" enctype="multipart/form-data" class="admin-form"><strong>items.csv</strong><input type="file" name="upload" /><button>업로드</button></form>
+    <form method="post" action="/admin/import/monsters" enctype="multipart/form-data" class="admin-form"><strong>monsters.csv</strong><input type="file" name="upload" /><button>업로드</button></form>
+    <form method="post" action="/admin/import/spells" enctype="multipart/form-data" class="admin-form"><strong>spells.csv</strong><input type="file" name="upload" /><button>업로드</button></form>
+    <form method="post" action="/admin/import/skins" enctype="multipart/form-data" class="admin-form"><strong>skins.csv</strong><input type="file" name="upload" /><button>업로드</button></form>
+    <form method="post" action="/admin/import/blood_marks" enctype="multipart/form-data" class="admin-form"><strong>blood_marks.csv</strong><input type="file" name="upload" /><button>업로드</button></form>
+  </div>
+  <div class="card">
+    <h2>실운영 메모</h2>
+    <ul>
+      <li>광고 슬롯 코드를 애드센스 코드로 교체</li>
+      <li>수기입력 템플릿 또는 합법적으로 확보한 CSV를 업로드</li>
+      <li>신고 접수 → 검토 → 제재 순서로 운영</li>
+      <li>이미지 업로드는 현재 URL 방식, 실서비스는 S3/Cloudflare R2 권장</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

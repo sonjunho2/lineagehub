@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-head"><h1>아이템 DB</h1><form><input name="q" value="{{ q }}" placeholder="아이템 검색" /><button>검색</button></form></div>
+<div class="grid-2-main">
+  <section>
+    {% for row in rows %}
+    <article class="card mb12">
+      <h2><a href="/items/{{ row.slug }}">{{ row.name }}</a></h2>
+      <p>{{ row.description }}</p>
+      <div class="tag-row"><span>{{ row.grade }}</span><span>{{ row.category }}</span><span>드랍: {{ row.drop_monsters }}</span><span>{{ row.tags }}</span></div>
+    </article>
+    {% endfor %}
+  </section>
+  <aside class="card ad-box">{{ slots.db_sidebar.code_html if slots.db_sidebar and slots.db_sidebar.is_enabled else 'DB 사이드 광고' }}</aside>
+</div>
+{% endblock %}

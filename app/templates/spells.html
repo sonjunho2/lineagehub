@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-head"><h1>마법 DB</h1><form><input name="q" value="{{ q }}" placeholder="마법/클래스 검색" /><button>검색</button></form></div>
+{% for row in rows %}
+<article class="card mb12">
+  <h2>{{ row.name }}</h2>
+  <p>{{ row.description }}</p>
+  <div class="tag-row"><span>{{ row.class_name }}</span><span>{{ row.grade }}</span><span>MP {{ row.mp_cost }}</span><span>쿨다운 {{ row.cooldown_note }}</span></div>
+  <table class="table compact">
+    {% for k, v in json.loads(row.effects_json or '{}').items() %}<tr><th>{{ k }}</th><td>{{ v }}</td></tr>{% endfor %}
+  </table>
+</article>
+{% endfor %}
+{% endblock %}
