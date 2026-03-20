@@ -4,11 +4,11 @@
 <section class="card">
   <div class="section-head"><h1>관리자 대시보드</h1></div>
   <div class="stats-grid">
-    <div class="stat"><strong>{{ stats.users }}</strong><span>회원</span></div>
-    <div class="stat"><strong>{{ stats.items }}</strong><span>아이템</span></div>
-    <div class="stat"><strong>{{ stats.posts }}</strong><span>게시글</span></div>
-    <div class="stat"><strong>{{ stats.price_rows }}</strong><span>시세 기록</span></div>
-    <div class="stat"><strong>{{ stats.reports_open }}</strong><span>열린 신고</span></div>
+    <div class="stat"><strong>{{ stats["users"] }}</strong><span>회원</span></div>
+    <div class="stat"><strong>{{ stats["items"] }}</strong><span>아이템</span></div>
+    <div class="stat"><strong>{{ stats["posts"] }}</strong><span>게시글</span></div>
+    <div class="stat"><strong>{{ stats["price_rows"] }}</strong><span>시세 기록</span></div>
+    <div class="stat"><strong>{{ stats["reports_open"] }}</strong><span>열린 신고</span></div>
   </div>
   <div class="admin-menu">
     <a href="/admin/items">아이템</a>
