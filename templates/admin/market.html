@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>시세 입력</h1>
+    <form method="post" class="form-grid">
+      <label>아이템
+        <select name="item_id">{% for i in items %}<option value="{{ i.id }}">{{ i.name }}</option>{% endfor %}</select>
+      </label>
+      <label>서버
+        <select name="server_name">{% for s in servers %}<option value="{{ s }}">{{ s }}</option>{% endfor %}</select>
+      </label>
+      <label>가격<input type="number" name="price" required></label>
+      <label>거래량<input type="number" name="volume" value="0"></label>
+      <button type="submit">기록 추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>최신 시세</h2>
+    <table class="table"><tr><th>아이템</th><th>서버</th><th>가격</th><th>거래량</th><th>시간</th></tr>
+      {% for r in rows %}<tr><td>{{ r.name }}</td><td>{{ r.server_name }}</td><td>{{ "{:,}".format(r.price) }}</td><td>{{ r.volume }}</td><td>{{ r.recorded_at[:16].replace('T',' ') }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

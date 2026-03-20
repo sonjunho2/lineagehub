@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h1>러쉬 시뮬레이터</h1>
+  <p class="muted">로그인 시 포인트가 차감됩니다. 테스트용 deterministic 계산 방식으로 동작합니다.</p>
+  {% if result %}<div class="notice">{{ result }}</div>{% endif %}
+  <form method="post" action="/simulator/run" class="form-grid">
+    <label>아이템
+      <select name="item_id">
+        {% for item in items %}
+        <option value="{{ item.id }}">{{ item.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>시도 횟수<input type="number" name="tries" value="5" min="1"></label>
+    <label>1회 비용<input type="number" name="cost" value="1000" min="1"></label>
+    <label>성공 확률(%)<input type="number" name="success_rate" value="30" min="1" max="100"></label>
+    <button type="submit">실행</button>
+  </form>
+  {% if user %}<div class="muted">현재 포인트: {{ "{:,}".format(user.points) }}P</div>{% endif %}
+</section>
+{% endblock %}

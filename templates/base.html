@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title or "Lineage Classic Hub" }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="wrap nav">
+    <a class="brand" href="/">Lineage Classic Hub</a>
+    <nav class="menu">
+      <a href="/items">아이템</a>
+      <a href="/monsters">몬스터</a>
+      <a href="/spells">마법</a>
+      <a href="/market">시세</a>
+      <a href="/skins">스킨</a>
+      <a href="/blood-marks">혈마크</a>
+      <a href="/simulator">러쉬</a>
+      <a href="/community">커뮤니티</a>
+      <a href="/report">신고</a>
+      {% if user %}
+        <a href="/mypage">마이페이지</a>
+        {% if user.role == 'admin' %}<a href="/admin">관리자</a>{% endif %}
+        <a href="/logout">로그아웃</a>
+      {% else %}
+        <a href="/login">로그인</a>
+        <a href="/register">회원가입</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>운영 테스트용 통합 사이트</div>
+    <div><a href="/healthz">헬스체크</a></div>
+  </div>
+</footer>
+</body>
+</html>

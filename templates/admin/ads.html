@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h1>광고 슬롯 관리</h1>
+  {% for ad in ads %}
+  <form method="post" action="/admin/ads/{{ ad.id }}" class="card inset">
+    <div class="section-head">
+      <strong>{{ ad.slot_name }}</strong>
+      <span class="muted">{{ ad.location }}</span>
+    </div>
+    <label class="toggle">
+      <input type="checkbox" name="is_active" value="1" {% if ad.is_active %}checked{% endif %}>
+      활성화
+    </label>
+    <textarea name="snippet" rows="4">{{ ad.snippet }}</textarea>
+    <button type="submit">저장</button>
+  </form>
+  {% endfor %}
+</section>
+{% endblock %}

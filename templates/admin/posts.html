@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h1>게시글 관리</h1>
+  <table class="table">
+    <tr><th>ID</th><th>분류</th><th>제목</th><th>작성자</th><th>상태</th><th>조치</th></tr>
+    {% for p in posts %}
+    <tr>
+      <td>{{ p.id }}</td><td>{{ p.board_type }}</td><td>{{ p.title }}</td><td>{{ p.display_name }}</td><td>{{ p.status }}</td>
+      <td>
+        <form method="post" action="/admin/posts/{{ p.id }}/status" class="inline-form">
+          <select name="status">
+            <option value="published" {% if p.status=='published' %}selected{% endif %}>published</option>
+            <option value="hidden" {% if p.status=='hidden' %}selected{% endif %}>hidden</option>
+          </select>
+          <button type="submit">변경</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

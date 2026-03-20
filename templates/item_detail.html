@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="detail-head">
+    <img class="detail-image" src="{{ item.image_url }}" alt="{{ item.name }}">
+    <div>
+      <h1>{{ item.name }}</h1>
+      <div class="muted">{{ item.grade }} · {{ item.category }}</div>
+      <p>{{ item.description }}</p>
+      <div class="muted">드랍 정보: {{ item.drop_info }}</div>
+    </div>
+  </div>
+  <div class="sub-card">
+    <h3>가격 추이</h3>
+    <img class="spark-large" src="{{ sparkline }}">
+  </div>
+  <div class="grid-2">
+    <div class="sub-card">
+      <h3>서버별 최신가</h3>
+      <table class="table">
+        <tr><th>서버</th><th>가격</th><th>거래량</th><th>업데이트</th></tr>
+        {% for row in grouped %}
+        <tr><td>{{ row.server_name }}</td><td>{{ "{:,}".format(row.price) }}</td><td>{{ row.volume }}</td><td>{{ row.recorded_at[:16].replace('T',' ') }}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="sub-card">
+      <h3>최근 기록</h3>
+      <table class="table">
+        <tr><th>서버</th><th>가격</th><th>거래량</th><th>시간</th></tr>
+        {% for row in prices[:10] %}
+        <tr><td>{{ row.server_name }}</td><td>{{ "{:,}".format(row.price) }}</td><td>{{ row.volume }}</td><td>{{ row.recorded_at[:16].replace('T',' ') }}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  {{ content_ad|safe }}
+</section>
+{% endblock %}

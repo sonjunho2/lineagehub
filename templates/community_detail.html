@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head">
+    <div>
+      <span class="badge">{{ post.board_type }}</span>
+      <h1>{{ post.title }}</h1>
+      <div class="muted">{{ post.display_name }} · 조회 {{ post.views + 1 }} · {{ post.created_at[:16].replace('T',' ') }}</div>
+    </div>
+    {% if user %}<a class="button-link" href="/report">신고하기</a>{% endif %}
+  </div>
+  <div class="post-body">{{ post.content }}</div>
+</section>
+
+<section class="card">
+  <h2>댓글</h2>
+  <div class="posts">
+    {% for c in comments %}
+    <div class="comment">
+      <strong>{{ c.display_name }}</strong>
+      <div>{{ c.content }}</div>
+      <div class="muted">{{ c.created_at[:16].replace('T',' ') }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if user %}
+  <form method="post" action="/community/{{ post.id }}/comment" class="toolbar">
+    <input name="content" placeholder="댓글 입력" required>
+    <button type="submit">등록</button>
+  </form>
+  {% else %}
+  <div class="muted">댓글 작성은 로그인 후 가능합니다.</div>
+  {% endif %}
+</section>
+{% endblock %}

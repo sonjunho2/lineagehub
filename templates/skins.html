@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head"><h1>스킨 자료실</h1></div>
+  <div class="list-grid">
+    {% for s in skins %}
+    <div class="skin-card">
+      <img src="{{ s.preview_url }}" alt="{{ s.name }}">
+      <div class="item-title">{{ s.name }}</div>
+      <div class="muted">{{ s.author }}</div>
+      <div class="color-chip" style="background: {{ s.color_code }}">{{ s.color_code }}</div>
+      <div>{{ s.description }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

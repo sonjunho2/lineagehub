@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head">
+    <h1>커뮤니티</h1>
+    {% if user %}<a class="button-link" href="/community/new">글쓰기</a>{% endif %}
+  </div>
+  <form class="toolbar">
+    <select name="board_type">
+      <option value="">전체 게시판</option>
+      {% for b in boards %}
+      <option value="{{ b }}" {% if board_type == b %}selected{% endif %}>{{ b }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">적용</button>
+  </form>
+  <table class="table">
+    <tr><th>분류</th><th>제목</th><th>작성자</th><th>조회</th><th>작성일</th></tr>
+    {% for p in posts %}
+    <tr>
+      <td>{{ p.board_type }}</td>
+      <td><a href="/community/{{ p.id }}">{{ p.title }}</a></td>
+      <td>{{ p.display_name }}</td>
+      <td>{{ p.views }}</td>
+      <td>{{ p.created_at[:16].replace('T',' ') }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

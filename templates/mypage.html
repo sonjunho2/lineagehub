@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>마이페이지</h1>
+    <div class="info-grid">
+      <div><strong>아이디</strong><span>{{ user.username }}</span></div>
+      <div><strong>닉네임</strong><span>{{ user.display_name }}</span></div>
+      <div><strong>권한</strong><span>{{ user.role }}</span></div>
+      <div><strong>포인트</strong><span>{{ "{:,}".format(user.points) }}P</span></div>
+      <div><strong>상태</strong><span>{{ user.status }}</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>포인트 로그</h2>
+    <table class="table">
+      <tr><th>변동</th><th>사유</th><th>시간</th></tr>
+      {% for l in logs %}
+      <tr><td>{{ "{:+,}".format(l.delta) }}</td><td>{{ l.reason }}</td><td>{{ l.created_at[:16].replace('T',' ') }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+<section class="card">
+  <h2>내 게시글</h2>
+  <table class="table">
+    <tr><th>분류</th><th>제목</th><th>작성일</th></tr>
+    {% for p in my_posts %}
+    <tr><td>{{ p.board_type }}</td><td><a href="/community/{{ p.id }}">{{ p.title }}</a></td><td>{{ p.created_at[:16].replace('T',' ') }}</td></tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

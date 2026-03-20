@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h1>신고 접수</h1>
+  {% if success %}<div class="notice">{{ success }}</div>{% endif %}
+  {% if user %}
+  <form method="post" class="form-grid">
+    <label>신고 대상 유형
+      <select name="target_type">
+        <option value="post">게시글</option>
+        <option value="comment">댓글</option>
+        <option value="user">회원</option>
+        <option value="item">아이템 정보</option>
+      </select>
+    </label>
+    <label>대상 ID(숫자)<input type="number" name="target_id" value="0"></label>
+    <label>신고 사유<textarea name="reason" rows="6" required></textarea></label>
+    <button type="submit">신고 등록</button>
+  </form>
+  {% else %}
+  <div class="notice">신고는 로그인 후 가능합니다.</div>
+  {% endif %}
+</section>
+{% endblock %}

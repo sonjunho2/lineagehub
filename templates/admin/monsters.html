@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>몬스터 등록</h1>
+    <form method="post" class="form-grid">
+      <label>이름<input name="name" required></label>
+      <label>레벨<input type="number" name="level" value="1"></label>
+      <label>지역<input name="region" required></label>
+      <label>드랍 아이템<textarea name="drop_items" rows="3"></textarea></label>
+      <label>설명<textarea name="description" rows="3"></textarea></label>
+      <label>이미지 URL<input name="image_url" value="/static/images/monster.svg"></label>
+      <button type="submit">추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>몬스터 목록</h2>
+    <table class="table"><tr><th>ID</th><th>이름</th><th>레벨</th><th>지역</th></tr>
+      {% for m in monsters %}<tr><td>{{ m.id }}</td><td>{{ m.name }}</td><td>{{ m.level }}</td><td>{{ m.region }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

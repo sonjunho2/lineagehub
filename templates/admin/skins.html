@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>스킨 등록</h1>
+    <form method="post" class="form-grid">
+      <label>이름<input name="name" required></label>
+      <label>제작자<input name="author" required></label>
+      <label>색상 코드<input name="color_code" value="#c99a2e"></label>
+      <label>설명<textarea name="description" rows="3"></textarea></label>
+      <label>미리보기 URL<input name="preview_url" value="/static/images/skin.svg"></label>
+      <button type="submit">추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>스킨 목록</h2>
+    <table class="table"><tr><th>ID</th><th>이름</th><th>제작자</th><th>색상</th></tr>
+      {% for s in skins %}<tr><td>{{ s.id }}</td><td>{{ s.name }}</td><td>{{ s.author }}</td><td>{{ s.color_code }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

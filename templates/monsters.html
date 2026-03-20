@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head"><h1>몬스터 DB</h1></div>
+  <form class="toolbar">
+    <input name="q" value="{{ q }}" placeholder="몬스터명, 지역, 드랍 아이템 검색">
+    <button type="submit">검색</button>
+  </form>
+  <div class="list-grid">
+    {% for m in monsters %}
+    <div class="item-card">
+      <img src="{{ m.image_url }}" alt="{{ m.name }}">
+      <div>
+        <div class="item-title">{{ m.name }}</div>
+        <div class="muted">Lv.{{ m.level }} · {{ m.region }}</div>
+        <div>{{ m.description }}</div>
+        <div class="muted">드랍: {{ m.drop_items }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

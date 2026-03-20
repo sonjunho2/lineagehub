@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h1>회원 / 제재 관리</h1>
+  <table class="table">
+    <tr><th>ID</th><th>아이디</th><th>닉네임</th><th>권한</th><th>포인트</th><th>상태</th><th>포인트 수정</th><th>상태 변경</th></tr>
+    {% for u in users %}
+    <tr>
+      <td>{{ u.id }}</td>
+      <td>{{ u.username }}</td>
+      <td>{{ u.display_name }}</td>
+      <td>{{ u.role }}</td>
+      <td>{{ "{:,}".format(u.points) }}</td>
+      <td>{{ u.status }}</td>
+      <td>
+        <form method="post" action="/admin/users/{{ u.id }}/points" class="inline-form">
+          <input type="number" name="points" value="{{ u.points }}">
+          <button type="submit">저장</button>
+        </form>
+      </td>
+      <td>
+        <form method="post" action="/admin/users/{{ u.id }}/status" class="inline-form">
+          <select name="status">
+            <option value="active" {% if u.status=='active' %}selected{% endif %}>active</option>
+            <option value="banned" {% if u.status=='banned' %}selected{% endif %}>banned</option>
+          </select>
+          <input name="reason" placeholder="사유">
+          <button type="submit">적용</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+<section class="card">
+  <h2>제재 로그</h2>
+  <table class="table">
+    <tr><th>ID</th><th>회원</th><th>조치</th><th>사유</th><th>시간</th></tr>
+    {% for s in sanctions %}
+    <tr><td>{{ s.id }}</td><td>{{ s.display_name }}</td><td>{{ s.action }}</td><td>{{ s.reason }}</td><td>{{ s.created_at[:16].replace('T',' ') }}</td></tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

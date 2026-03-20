@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head"><h1>아이템 DB</h1></div>
+  <form class="toolbar" method="get">
+    <input name="q" value="{{ q }}" placeholder="아이템명, 설명, 드랍정보 검색">
+    <select name="category">
+      <option value="">전체 카테고리</option>
+      {% for c in categories %}
+      <option value="{{ c }}" {% if category == c %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">검색</button>
+  </form>
+  {{ content_ad|safe }}
+  <div class="list-grid">
+    {% for item in items %}
+    <a class="item-card" href="/items/{{ item.id }}">
+      <img src="{{ item.image_url }}" alt="{{ item.name }}">
+      <div>
+        <div class="item-title">{{ item.name }}</div>
+        <div class="muted">{{ item.grade }} · {{ item.category }}</div>
+        <div>{{ item.description }}</div>
+        <div class="muted">드랍: {{ item.drop_info }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

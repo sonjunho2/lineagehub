@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head"><h1>관리자 대시보드</h1></div>
+  <div class="stats-grid">
+    <div class="stat"><strong>{{ stats.users }}</strong><span>회원</span></div>
+    <div class="stat"><strong>{{ stats.items }}</strong><span>아이템</span></div>
+    <div class="stat"><strong>{{ stats.posts }}</strong><span>게시글</span></div>
+    <div class="stat"><strong>{{ stats.price_rows }}</strong><span>시세 기록</span></div>
+    <div class="stat"><strong>{{ stats.reports_open }}</strong><span>열린 신고</span></div>
+  </div>
+  <div class="admin-menu">
+    <a href="/admin/items">아이템</a>
+    <a href="/admin/monsters">몬스터</a>
+    <a href="/admin/spells">마법</a>
+    <a href="/admin/skins">스킨</a>
+    <a href="/admin/blood-marks">혈마크</a>
+    <a href="/admin/market">시세</a>
+    <a href="/admin/users">회원/제재</a>
+    <a href="/admin/posts">게시글</a>
+    <a href="/admin/reports">신고</a>
+    <a href="/admin/ads">광고</a>
+  </div>
+</section>
+<section class="card">
+  <h2>최근 신고</h2>
+  <table class="table">
+    <tr><th>ID</th><th>신고자</th><th>유형</th><th>대상</th><th>사유</th><th>상태</th></tr>
+    {% for r in reports %}
+    <tr><td>{{ r.id }}</td><td>{{ r.display_name or '-' }}</td><td>{{ r.target_type }}</td><td>{{ r.target_id }}</td><td>{{ r.reason }}</td><td>{{ r.status }}</td></tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

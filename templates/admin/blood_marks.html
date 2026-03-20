@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>혈마크 등록</h1>
+    <form method="post" class="form-grid">
+      <label>이름<input name="name" required></label>
+      <label>혈맹명<input name="clan_name" required></label>
+      <label>설명<textarea name="description" rows="3"></textarea></label>
+      <label>미리보기 URL<input name="preview_url" value="/static/images/bloodmark.svg"></label>
+      <button type="submit">추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>혈마크 목록</h2>
+    <table class="table"><tr><th>ID</th><th>이름</th><th>혈맹명</th></tr>
+      {% for m in marks %}<tr><td>{{ m.id }}</td><td>{{ m.name }}</td><td>{{ m.clan_name }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

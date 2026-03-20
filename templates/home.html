@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="hero card">
+  <div>
+    <h1>리니지클래식 통합 정보/시세/커뮤니티</h1>
+    <p>아이템 DB, 몬스터 DB, 마법 DB, 스킨/혈마크, 시세, 러쉬 시뮬레이터, 커뮤니티, 관리자 기능이 한 서버에서 동작합니다.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat"><strong>{{ summary.items }}</strong><span>아이템</span></div>
+    <div class="stat"><strong>{{ summary.monsters }}</strong><span>몬스터</span></div>
+    <div class="stat"><strong>{{ summary.spells }}</strong><span>마법</span></div>
+    <div class="stat"><strong>{{ summary.posts }}</strong><span>게시글</span></div>
+  </div>
+</section>
+
+{{ home_top_ad|safe }}
+
+<section class="grid-2">
+  <div class="card">
+    <div class="section-head"><h2>핫 시세</h2><a href="/market">전체 보기</a></div>
+    <div class="list-grid">
+      {% for row in market_rows %}
+      <a class="item-card" href="/items/{{ row.id }}">
+        <img src="{{ row.image_url }}" alt="{{ row.name }}">
+        <div>
+          <div class="item-title">{{ row.name }}</div>
+          <div class="muted">{{ row.server_name }} · {{ row.category }} · {{ row.grade }}</div>
+          <div class="price">{{ "{:,}".format(row.price) }} 아데나</div>
+          <img class="spark" src="{{ row.sparkline }}">
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>최신 커뮤니티</h2><a href="/community">전체 보기</a></div>
+    <div class="posts">
+      {% for post in boards %}
+      <a class="post-row" href="/community/{{ post.id }}">
+        <div>
+          <span class="badge">{{ post.board_type }}</span>
+          <strong>{{ post.title }}</strong>
+        </div>
+        <div class="muted">{{ post.display_name }}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

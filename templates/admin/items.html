@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>아이템 등록</h1>
+    <form method="post" class="form-grid">
+      <label>아이템명<input name="name" required></label>
+      <label>등급<select name="grade">{% for g in grades %}<option value="{{ g }}">{{ g }}</option>{% endfor %}</select></label>
+      <label>카테고리<select name="category">{% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}</select></label>
+      <label>이미지 URL<input name="image_url" value="/static/images/default.svg"></label>
+      <label>설명<textarea name="description" rows="4"></textarea></label>
+      <label>드랍 정보<textarea name="drop_info" rows="3"></textarea></label>
+      <button type="submit">추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>등록 목록</h2>
+    <table class="table">
+      <tr><th>ID</th><th>아이템명</th><th>등급</th><th>카테고리</th></tr>
+      {% for i in items %}
+      <tr><td>{{ i.id }}</td><td>{{ i.name }}</td><td>{{ i.grade }}</td><td>{{ i.category }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

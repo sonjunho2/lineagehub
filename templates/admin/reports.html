@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h1>신고 처리</h1>
+  <table class="table">
+    <tr><th>ID</th><th>신고자</th><th>유형</th><th>대상</th><th>사유</th><th>상태</th><th>처리</th></tr>
+    {% for r in reports %}
+    <tr>
+      <td>{{ r.id }}</td><td>{{ r.display_name or '-' }}</td><td>{{ r.target_type }}</td><td>{{ r.target_id }}</td><td>{{ r.reason }}</td><td>{{ r.status }}</td>
+      <td>
+        <form method="post" action="/admin/reports/{{ r.id }}" class="inline-form stack">
+          <select name="status">
+            <option value="open" {% if r.status=='open' %}selected{% endif %}>open</option>
+            <option value="reviewed" {% if r.status=='reviewed' %}selected{% endif %}>reviewed</option>
+            <option value="actioned" {% if r.status=='actioned' %}selected{% endif %}>actioned</option>
+          </select>
+          <input name="admin_note" placeholder="메모" value="{{ r.admin_note }}">
+          <button type="submit">저장</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

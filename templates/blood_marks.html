@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head"><h1>혈마크 자료실</h1></div>
+  <div class="list-grid">
+    {% for m in marks %}
+    <div class="skin-card">
+      <img src="{{ m.preview_url }}" alt="{{ m.name }}">
+      <div class="item-title">{{ m.name }}</div>
+      <div class="muted">{{ m.clan_name }}</div>
+      <div>{{ m.description }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

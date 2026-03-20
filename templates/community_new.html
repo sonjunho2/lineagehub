@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h1>글쓰기</h1>
+  <form method="post" class="form-grid">
+    <label>게시판
+      <select name="board_type">
+        {% for b in boards %}<option value="{{ b }}">{{ b }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>제목<input name="title" required></label>
+    <label>내용<textarea name="content" rows="10" required></textarea></label>
+    <button type="submit">등록</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="grid-2">
+  <div class="card">
+    <h1>마법 등록</h1>
+    <form method="post" class="form-grid">
+      <label>이름<input name="name" required></label>
+      <label>클래스<input name="spell_class" required></label>
+      <label>MP 비용<input type="number" name="mp_cost" value="0"></label>
+      <label>설명<textarea name="description" rows="3"></textarea></label>
+      <label>이미지 URL<input name="image_url" value="/static/images/spell.svg"></label>
+      <button type="submit">추가</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>마법 목록</h2>
+    <table class="table"><tr><th>ID</th><th>이름</th><th>클래스</th><th>MP</th></tr>
+      {% for s in spells %}<tr><td>{{ s.id }}</td><td>{{ s.name }}</td><td>{{ s.spell_class }}</td><td>{{ s.mp_cost }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

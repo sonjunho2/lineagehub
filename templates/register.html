@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+  <h1>회원가입</h1>
+  {% if error %}<div class="notice danger">{{ error }}</div>{% endif %}
+  <form method="post" class="form-grid">
+    <label>아이디<input name="username" required></label>
+    <label>닉네임<input name="display_name" required></label>
+    <label>비밀번호<input name="password" type="password" required></label>
+    <button type="submit">가입하기</button>
+  </form>
+</section>
+{% endblock %}

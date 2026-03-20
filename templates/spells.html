@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <div class="section-head"><h1>마법 DB</h1></div>
+  <form class="toolbar">
+    <input name="q" value="{{ q }}" placeholder="마법명 또는 설명 검색">
+    <input name="spell_class" value="{{ spell_class }}" placeholder="클래스 검색">
+    <button type="submit">검색</button>
+  </form>
+  <div class="list-grid">
+    {% for s in spells %}
+    <div class="item-card">
+      <img src="{{ s.image_url }}" alt="{{ s.name }}">
+      <div>
+        <div class="item-title">{{ s.name }}</div>
+        <div class="muted">{{ s.spell_class }} · MP {{ s.mp_cost }}</div>
+        <div>{{ s.description }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
