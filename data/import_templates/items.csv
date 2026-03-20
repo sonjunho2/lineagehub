@@ -1,2 +1,0 @@
-slug,name,grade,category,description,source,drop_monsters,stats_json,tags
-sample-sword,샘플 검,영웅,무기,설명 입력,합법적 수기 입력,"오크, 스켈레톤","{""damage"":""8/10"",""safeEnchant"":6}",사냥,근거리
